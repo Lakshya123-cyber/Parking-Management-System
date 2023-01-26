@@ -21,17 +21,17 @@ class HomeScreen(QMainWindow):
         super().__init__()
         self.setWindowTitle("Home")
         self.dbOperation = DBOperation()
-        widget = QWidget() #! THIS CREATES THE POP UP SCREEN 
+        widget = QWidget()  #! THIS CREATES THE POP UP SCREEN
         widget.setStyleSheet("background:#000")
-        layout_horizontal = QHBoxLayout() #! HORIZONTAL GRID SYSTEM
-        menu_vertical_layout = QVBoxLayout() #! VERTICAL GRID SYSTEM
+        layout_horizontal = QHBoxLayout()  #! HORIZONTAL GRID SYSTEM
+        menu_vertical_layout = QVBoxLayout()  #! VERTICAL GRID SYSTEM
 
-        self.btn_home = QPushButton("Home") #! Adds a button which says HOME
+        self.btn_home = QPushButton("Home")  #! Adds a button which says HOME
         self.btn_add = QPushButton("Add Vehicle")
         self.btn_manage = QPushButton("Manage Vehicle")
         self.btn_history = QPushButton("History")
 
-        menu_vertical_layout.setContentsMargins(0, 0, 0, 0) #! ADDS margin setting -> 0
+        menu_vertical_layout.setContentsMargins(0, 0, 0, 0)  #! ADDS margin setting -> 0
         menu_vertical_layout.setSpacing(0)
         self.btn_home.setStyleSheet(
             "width:200px;height:160px;font-size:20px;background:blue;color:#fff;font-weight:bold;border:1px solid white"
@@ -46,13 +46,15 @@ class HomeScreen(QMainWindow):
             "width:200px;height:160px;font-size:20px;background:orange;color:#fff;font-weight:bold;border:1px solid white"
         )
 
-        self.btn_home.clicked.connect(self.showHome) #! Click
+        self.btn_home.clicked.connect(self.showHome)  #! Click
         self.btn_add.clicked.connect(self.showAdd)
         self.btn_manage.clicked.connect(self.showManage)
         self.btn_history.clicked.connect(self.showHistory)
 
-        menu_frame = QFrame() #! Creates a frame so that the buttons are set in one place
-        menu_vertical_layout.addWidget(self.btn_home) #! ADDS THE BUTTON vertically
+        menu_frame = (
+            QFrame()
+        )  #! Creates a frame so that the buttons are set in one place
+        menu_vertical_layout.addWidget(self.btn_home)  #! ADDS THE BUTTON vertically
         menu_vertical_layout.addWidget(self.btn_add)
         menu_vertical_layout.addWidget(self.btn_manage)
         menu_vertical_layout.addWidget(self.btn_history)
@@ -111,6 +113,7 @@ class HomeScreen(QMainWindow):
 
         self.setCentralWidget(widget)
 
+    #! When clicked on History button, it will set the button background to blue and will show the history screen
     def showHistory(self):
         self.btn_home.setStyleSheet(
             "width:200px;height:160px;font-size:20px;background:orange;color:#fff;font-weight:bold;border:1px solid white"
@@ -125,6 +128,7 @@ class HomeScreen(QMainWindow):
             "width:200px;height:160px;font-size:20px;background:blue;color:#fff;font-weight:bold;border:1px solid white"
         )
 
+        #! shows the frame 4 which is history screen
         self.frame_1.hide()
         self.frame_2.hide()
         self.frame_3.hide()
@@ -187,6 +191,7 @@ class HomeScreen(QMainWindow):
         self.frame_4.hide()
         self.frame_1.show()
 
+    #! When pressed, it refreshes the whole page and shows new data
     def refreshHome(self):
         while self.gridLayout.count():
             child = self.gridLayout.takeAt(0)
@@ -196,6 +201,7 @@ class HomeScreen(QMainWindow):
         i = 0
         alldata = self.dbOperation.getSlotSpace()
         for data in alldata:
+            #! Shows the number of slot
             label = QPushButton("Slot " + str(data[0]) + " \n " + str(data[1]))
 
             if data[3] == 1:
@@ -214,6 +220,7 @@ class HomeScreen(QMainWindow):
             self.gridLayout.addWidget(label, row, i)
             i = i + 1
 
+    #! Home screen code, all the slots will be visible here
     def addHomePageData(self):
         self.vertical_1.setContentsMargins(0, 0, 0, 0)
         button = QPushButton("Refresh")
@@ -263,6 +270,7 @@ class HomeScreen(QMainWindow):
         self.vertical_1.addWidget(frame)
         self.vertical_1.addStretch()
 
+    #! Add vehicle screen through which user can add vehicle to the parking space
     def addVehiclePage(self):
         layout = QVBoxLayout()
         frame = QFrame()
@@ -284,11 +292,11 @@ class HomeScreen(QMainWindow):
         mobile_input.setStyleSheet("color:#fff;padding:8px 0px;font-size:20px")
         vehicle_input = QLineEdit()
         vehicle_input.setStyleSheet("color:#fff;padding:8px 0px;font-size:20px")
-        vtype = QComboBox()
+        vtype = QComboBox() #! Combo box is a drop down menu list
         vtype.setStyleSheet(
             "color:#fff;padding:8px 0px;font-size:20px;border:1px solid white"
         )
-        vtype.addItem("2 Wheeler")
+        vtype.addItem("2 Wheeler") #! Adds item to the drop down list
         vtype.addItem("4 Wheeler")
 
         button = QPushButton("Add Vehicle")

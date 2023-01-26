@@ -16,27 +16,32 @@ class MainScreen:
 
 
 def showSetupWindow():
+    #! Closes the splash screen and shows the setup window
     mainScreen.splash.close()
     configureWindow.show()
 
 
 def showLoginWindow():
+    #! Closes the splash screen and shows the login window
     mainScreen.splash.close()
     login.showLoginScreen()
 
 
+#! Running the application
 app = QApplication(sys.argv)
 login = LoginScreen()
 mainScreen = MainScreen()
 mainScreen.showSplashScreen()
 configureWindow = ConfigureWindow()
 
+
+#! Checking if config.json files exists
 if os.path.exists("./config.json"):
     QTimer.singleShot(3000, showLoginWindow)
 else:
     QTimer.singleShot(3000, showSetupWindow)
 
-
+#! If user presses close button on the window, it will terminate the program and close the window
 sys.exit(app.exec_())
 
 
